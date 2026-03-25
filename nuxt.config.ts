@@ -86,17 +86,25 @@ export default defineNuxtConfig({
       }
     },
   },
+
   nitro: {
     preset: "node-server",
-
     prerender: {
-      routes: ["/"],
-      crawlLinks: false, // disable crawl to prevent dynamic route prerendering
+      routes: [
+        "/",
+        "/admins/sign-in",
+        "/about-us",
+        "/contact-us",
+        "/cookie-policy",
+        "/Privacy",
+        "/terms",
+      ],
+      crawlLinks: false,
     },
   },
 
   routeRules: {
-    // SSR for dynamic routes - don't prerender
-    "/blog/**": { swr: 3600 }, // Vercel ISR: revalidate every hour
+    "/blog/**": { swr: 3600 }, // ISR: cache for 1 hour
+    "/admins/**": { cache: false }, // Never cache admin pages
   },
 });

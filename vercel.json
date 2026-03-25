@@ -1,4 +1,5 @@
 {
   "buildCommand": "nuxi build",
-  "outputDirectory": ".output/public"
+  "outputDirectory": ".output/public",
+  "routes": [{ "src": "/(.*)", "dest": "/" }]
 }
