@@ -1,0 +1,8 @@
+/* @font-face {
+  font-family: "Matter";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Matter"), url("Matter-Regular.woff") format("woff");
+} */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");

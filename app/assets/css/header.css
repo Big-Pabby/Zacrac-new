@@ -1,0 +1,335 @@
+/* Header Styles */
+
+/* Desktop Navigation */
+.header-nav {
+  display: flex;
+  align-items: center;
+}
+
+.menu {
+  transition: all 0.3s ease;
+}
+
+/* Dropdown Menus - Desktop */
+.has-drop {
+  position: relative;
+}
+
+.drop-down-holder {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999999;
+  padding-top: 16px;
+}
+
+.has-drop:hover .drop-down-holder {
+  display: block !important;
+}
+
+.has-drop:hover .menu-backdrop {
+  display: block;
+  position: fixed;
+  top: 57px;
+  z-index: 9999999999;
+}
+
+.has-drop .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  background: white;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 16px 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.has-drop:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.has-drop .dropdown-menu a {
+  display: block;
+  padding: 10px 20px;
+  color: #333;
+  text-decoration: none;
+  transition:
+    background 0.2s,
+    color 0.2s;
+  font-size: 14px;
+}
+
+.has-drop .dropdown-menu a:hover {
+  background: #f5f5f5;
+  color: #2563eb;
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 1001;
+  padding: 2px;
+}
+
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #333;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Hamburger animation when open */
+.hamburger.open .hamburger-top {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger.open .hamburger-middle {
+  opacity: 0;
+}
+
+.hamburger.open .hamburger-bottom {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Mobile Styles */
+@media (max-width: 1023px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 85%;
+    max-width: 340px;
+    height: 100vh;
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+    padding: 100px 24px 40px;
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    overflow-y: auto;
+  }
+
+  .menu.open {
+    right: 0;
+  }
+
+  .menu-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+    backdrop-filter: blur(2px);
+  }
+
+  .menu-backdrop.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Mobile Nav Items */
+  .mobile-nav .nav {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .mobile-nav .nav > div:first-child {
+    cursor: pointer;
+    padding: 16px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mobile-nav .nav .dropdown-content {
+    max-height: 0;
+    overflow: hidden;
+    transition:
+      max-height 0.3s ease,
+      opacity 0.3s ease;
+    opacity: 0;
+  }
+
+  .mobile-nav .nav .dropdown-content.open {
+    max-height: 600px;
+    opacity: 1;
+  }
+
+  /* Mobile menu link styles */
+  .mobile-nav .nav .dropdown-content a {
+    color: rgba(255, 255, 255, 0.8);
+    padding: 10px 0;
+    display: block;
+    transition: color 0.2s;
+  }
+
+  .mobile-nav .nav .dropdown-content a:hover {
+    color: #fff;
+  }
+
+  /* Mobile nav category titles */
+  .mobile-nav .nav > div:first-child p {
+    font-weight: 500;
+    font-size: 16px;
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 1024px) {
+  .hamburger {
+    display: none !important;
+  }
+
+  .menu-backdrop {
+    display: none !important;
+  }
+
+  .menu-hidden {
+    display: none !important;
+  }
+
+  /* Logo */
+  .logo2 {
+    height: 50px;
+    width: auto;
+  }
+
+  /* Like Link Style */
+  .like-link {
+    cursor: pointer;
+    color: #333;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    transition:
+      background 0.2s,
+      color 0.2s;
+    font-size: 15px;
+  }
+
+  .like-link:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #2563eb;
+  }
+
+  /* Header */
+  header {
+    height: 70px;
+  }
+
+  main {
+    padding-top: 70px;
+  }
+}
+
+/* Mobile Menu Container */
+.menu-hidden {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.menu-hidden .mobile-menu {
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+  min-height: 100vh;
+}
+
+/* Logo Styles */
+.logo2 {
+  height: 50px;
+  width: auto;
+}
+
+.footer-logo {
+  height: 40px;
+  width: auto;
+}
+
+/* Like Link Style */
+.like-link {
+  cursor: pointer;
+  color: #333;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Header height and padding */
+header {
+  height: 70px;
+}
+
+/* Main content padding to account for fixed header */
+main {
+  padding-top: 70px;
+}
+
+/* Icon rotation for dropdowns */
+.rotate-icon {
+  transition: transform 0.3s ease;
+}
+
+.has-drop:hover .rotate-icon {
+  transform: rotate(180deg);
+}
+
+/* Mobile close button */
+.mobile-menu-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.mobile-menu-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Desktop nav adjustments */
+.header-nav nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  padding: 0;
+}
+
+@media (min-width: 1024px) {
+  .header-nav nav > div {
+    position: relative;
+  }
+}
