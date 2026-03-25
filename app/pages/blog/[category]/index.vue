@@ -279,7 +279,6 @@ const route = useRoute();
 const router = useRouter();
 
 const blogs = ref<BlogData[]>([]);
-const loading = ref(false);
 const currentPage = ref(1);
 const itemsPerPage = 9;
 const totalBlogs = ref(0);
@@ -305,59 +304,73 @@ const paginatedBlogs = computed(() => {
   return blogs.value.slice(index, index + itemsPerPage);
 });
 
-const blogData = async () => {
-  loading.value = true;
-  try {
-    const params = new URLSearchParams({
-      page: currentPage.value.toString(),
-      limit: itemsPerPage.toString(),
-      blogFor: "Zacrac",
-    });
+// Build query parameters - includes category from route
+const queryParams = computed(() => {
+  const params: Record<string, string> = {
+    page: currentPage.value.toString(),
+    limit: itemsPerPage.toString(),
+    blogFor: "Zacrac",
+  };
 
-    if (currentType.value) {
-      params.append("type", currentType.value);
-    }
+  if (currentType.value) {
+    params.type = currentType.value;
+  }
 
-    if (currentCategory.value) {
-      params.append("category", currentCategory.value);
-    }
+  if (currentCategory.value) {
+    params.category = currentCategory.value;
+  }
 
-    const response = (await (useNuxtApp().$axios as any).get(
-      `https://parrotapi.parrot.cx/blog?${params.toString()}`,
-    )) as { data: BlogResponse };
+  return params;
+});
 
-    if (response?.data?.status === "success") {
-      const data = response.data.data;
+// Initialize category from route params
+currentCategory.value = (route.params.category as string) || "";
+
+// Use useFetch instead of axios
+const {
+  data: response,
+  pending,
+  error,
+} = await useFetch("https://parrotapi.parrot.cx/blog", {
+  query: queryParams,
+  watch: [queryParams],
+});
+
+// Handle response data
+watch(
+  response,
+  (newResponse: any) => {
+    if (newResponse?.status === "success") {
+      const data = newResponse.data;
       blogs.value = data?.docs || data?.blogs || [];
       totalBlogs.value = data?.totalDocs || data?.total || 0;
       totalPageCount.value = data?.totalPages || 1;
-      fetchMessage.value = response.data.message;
+      fetchMessage.value = newResponse.message;
       messageType.value = "success";
     } else {
-      // Handle unexpected response structure
       blogs.value = [];
       messageType.value = "fail";
       fetchMessage.value = "Unable to load blogs. Please try again later.";
     }
-  } catch (err: unknown) {
-    const error = err as { response?: { data?: { message?: string } } };
+  },
+  { immediate: true },
+);
+
+// Handle errors
+watch(error, (err: any) => {
+  if (err) {
     messageType.value = "fail";
-    fetchMessage.value =
-      error.response?.data?.message || "Failed to load blogs";
-  } finally {
-    loading.value = false;
+    fetchMessage.value = err.data?.message || "Failed to load blogs";
   }
-};
+});
 
 const setType = (type: string) => {
   currentType.value = type;
   currentPage.value = 1;
-  blogData();
 };
 
 const setPage = (pageNumber: number) => {
   currentPage.value = pageNumber;
-  blogData();
   if (import.meta.client) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -372,11 +385,8 @@ const stripHtml = (html: string) => {
   return html.replace(/<[^>]*>/g, "");
 };
 
-// Get category from route params and fetch data on mount
-onMounted(() => {
-  currentCategory.value = (route.params.category as string) || "";
-  blogData();
-});
+// useFetch with watch automatically fetches on mount and parameter changes
+// No need for onMounted call
 
 // SEO Meta
 useHead({

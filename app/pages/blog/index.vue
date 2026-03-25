@@ -239,7 +239,6 @@
 </template>
 
 <script setup lang="ts">
-import axios from "axios";
 const blogs = ref<any[]>([]);
 const loading = ref(false);
 const currentPage = ref(1);
@@ -250,6 +249,63 @@ const currentType = ref("");
 const currentCategory = ref("");
 const fetchMessage = ref("");
 const messageType = ref("");
+
+// Build query parameters
+const queryParams = computed(() => {
+  const params: Record<string, string> = {
+    page: currentPage.value.toString(),
+    limit: itemsPerPage.toString(),
+    blogFor: "Zacrac",
+  };
+
+  if (currentType.value) {
+    params.type = currentType.value;
+  }
+
+  if (currentCategory.value) {
+    params.category = currentCategory.value;
+  }
+
+  return params;
+});
+
+// Use useFetch instead of axios
+const {
+  data: response,
+  pending,
+  error,
+} = await useFetch("https://parrotapi.parrot.cx/blog", {
+  query: queryParams,
+  watch: [queryParams],
+});
+
+// Handle response data
+watch(
+  response,
+  (newResponse: any) => {
+    if (newResponse?.status === "success") {
+      const data = newResponse.data;
+      blogs.value = data?.docs || data?.blogs || [];
+      totalBlogs.value = data?.totalDocs || data?.total || 0;
+      totalPageCount.value = data?.totalPages || 1;
+      fetchMessage.value = newResponse.message;
+      messageType.value = "success";
+    } else {
+      blogs.value = [];
+      messageType.value = "fail";
+      fetchMessage.value = "Unable to load blogs. Please try again later.";
+    }
+  },
+  { immediate: true },
+);
+
+// Handle errors
+watch(error, (err: any) => {
+  if (err) {
+    messageType.value = "fail";
+    fetchMessage.value = err.data?.message || "Failed to load blogs";
+  }
+});
 
 const categoryOptions = [
   { value: "", label: "All Categories" },
@@ -268,77 +324,18 @@ const paginatedBlogs = computed(() => {
   return blogs.value.slice(index, index + itemsPerPage);
 });
 
-const blogData = async () => {
-  loading.value = true;
-  try {
-    const params = new URLSearchParams({
-      page: currentPage.value.toString(),
-      limit: itemsPerPage.toString(),
-      blogFor: "Zacrac",
-    });
-
-    if (currentType.value) {
-      params.append("type", currentType.value);
-    }
-
-    if (currentCategory.value) {
-      params.append("category", currentCategory.value);
-    }
-
-    const response = (await axios.get(
-      `https://parrotapi.parrot.cx/blog?${params.toString()}`,
-    )) as {
-      data: {
-        status: string;
-        data: {
-          docs?: any[];
-          blogs?: any[];
-          totalDocs?: number;
-          total?: number;
-          totalPages?: number;
-        };
-        message: string;
-      };
-    };
-
-    if (response?.data?.status === "success") {
-      const data = response.data.data;
-      blogs.value = data?.docs || data?.blogs || [];
-      totalBlogs.value = data?.totalDocs || data?.total || 0;
-      totalPageCount.value = data?.totalPages || 1;
-      fetchMessage.value = response.data.message;
-      messageType.value = "success";
-    } else {
-      // Handle unexpected response structure
-      blogs.value = [];
-      messageType.value = "fail";
-      fetchMessage.value = "Unable to load blogs. Please try again later.";
-    }
-  } catch (err: unknown) {
-    const error = err as { response?: { data?: { message?: string } } };
-    messageType.value = "fail";
-    fetchMessage.value =
-      error.response?.data?.message || "Failed to load blogs";
-  } finally {
-    loading.value = false;
-  }
-};
-
 const setType = (type: string) => {
   currentType.value = type;
   currentPage.value = 1;
-  blogData();
 };
 
 const setCategory = (category: string) => {
   currentCategory.value = category;
   currentPage.value = 1;
-  blogData();
 };
 
 const setPage = (pageNumber: number) => {
   currentPage.value = pageNumber;
-  blogData();
   if (import.meta.client) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -357,9 +354,8 @@ const stripHtml = (html: string) => {
   return html.replace(/<[^>]*>/g, "");
 };
 
-onMounted(() => {
-  blogData();
-});
+// useFetch with watch automatically fetches on mount and parameter changes
+// No need for onMounted call
 
 useHead({
   title: "Zacrac Blog - Articles | Webinar | Explainer Videos",

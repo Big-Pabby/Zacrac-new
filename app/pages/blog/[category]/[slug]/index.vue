@@ -112,7 +112,6 @@
 
 <script setup lang="ts">
 import moment from "moment";
-import axios from "axios";
 
 interface BlogData {
   _id: string;
@@ -135,7 +134,6 @@ interface BlogResponse {
 const route = useRoute();
 
 const blog = ref<BlogData | null>(null);
-const loading = ref(false);
 const fetchMessage = ref("");
 const messageType = ref("");
 
@@ -162,28 +160,45 @@ const getCurrentUrl = () => {
   return `https://zacrac.com/blog/${category}/${slug}`;
 };
 
-const blogData = async () => {
-  const slug = route.params.slug as string;
-  loading.value = true;
+// Computed slug from route params
+const slug = computed(() => route.params.slug as string);
 
-  try {
-    const response = (await axios.get(
-      `https://parrotapi.parrot.cx/blog/slug/${slug}`,
-    )) as { data: BlogResponse };
-
-    if (response.data.status === "success") {
-      blog.value = response.data.data;
-      fetchMessage.value = response.data.message;
-      messageType.value = "success";
-    }
-  } catch (err: unknown) {
-    const error = err as { response?: { data?: { message?: string } } };
-    messageType.value = "fail";
-    fetchMessage.value = error.response?.data?.message || "Failed to load blog";
-  } finally {
-    loading.value = false;
+// Use useFetch instead of axios
+const { data: response, pending, error } = await useFetch(
+  `https://parrotapi.parrot.cx/blog/slug/${slug.value}`,
+  {
+    watch: [slug],
   }
-};
+);
+
+// Handle response data
+watch(
+  response,
+  (newResponse: any) => {
+    if (newResponse?.status === "success") {
+      blog.value = newResponse.data;
+      fetchMessage.value = newResponse.message;
+      messageType.value = "success";
+    } else {
+      blog.value = null;
+      messageType.value = "fail";
+      fetchMessage.value = "Failed to load blog";
+    }
+  },
+  { immediate: true }
+);
+
+// Handle errors
+watch(error, (err: any) => {
+  if (err) {
+    messageType.value = "fail";
+    fetchMessage.value = err.data?.message || "Failed to load blog";
+    blog.value = null;
+  }
+});
+
+// Computed loading state from useFetch
+const loading = computed(() => pending.value);
 
 // Watch for blog changes and update meta tags
 watch(
@@ -251,10 +266,8 @@ const updateMetaTag = (property: string, content: string) => {
   }
 };
 
-// Fetch data on mount
-onMounted(() => {
-  blogData();
-});
+// useFetch automatically fetches on mount and when slug changes
+// No need for onMounted call
 
 // SEO Meta
 useHead(() => ({

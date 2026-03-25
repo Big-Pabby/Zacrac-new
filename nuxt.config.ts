@@ -87,24 +87,7 @@ export default defineNuxtConfig({
     },
   },
 
-  nitro: {
-    preset: "node-server",
-    prerender: {
-      routes: [
-        "/",
-        "/admins/sign-in",
-        "/about-us",
-        "/contact-us",
-        "/cookie-policy",
-        "/Privacy",
-        "/terms",
-      ],
-      crawlLinks: false,
-    },
-  },
+ 
 
-  routeRules: {
-    "/blog/**": { swr: 3600 }, // ISR: cache for 1 hour
-    "/admins/**": { cache: false }, // Never cache admin pages
-  },
+  
 });
