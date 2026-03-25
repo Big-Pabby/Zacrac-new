@@ -8,85 +8,105 @@
       <spinner />
     </div>
     <!-- Blog Content -->
-    <div v-else-if="blog" class="pt-24 pb-10 px-5 lg:px-56 mb-20">
-      <div class="w-full max-w-5xl mx-auto">
-        <!-- Back Button -->
-        <div class="mb-6">
-          <button
-            @click="$router.back()"
-            class="flex items-center gap-2 text-[#000462] hover:text-[#7d37d8] transition-colors"
-          >
-            <Icon name="uil:arrow-left" class="text-[#000462] text-xl" />
-            <span>Back to Blogs</span>
-          </button>
-        </div>
+    <div v-else-if="blog" class="w-full">
+      <!-- Hero Section with Linear Gradient Overlay -->
+      <div
+        class="relative w-full h-[60vh] md:h-[70vh] min-h-[400px] bg-cover bg-center bg-no-repeat"
+        :style="{
+          backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.6)), url(${blog.imageUrl})`,
+        }"
+      >
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full px-5 max-w-6xl lg:px-20 pt-24">
+            <!-- Back Button -->
+            <div class="mb-6">
+              <button
+                @click="$router.back()"
+                class="flex items-center gap-2 text-white/90 hover:text-white transition-colors"
+              >
+                <Icon name="uil:arrow-left" class="text-white/90 text-xl" />
+                <span>Back to Blogs</span>
+              </button>
+            </div>
 
-        <!-- Blog Image -->
-        <div class="w-full mb-8">
-          <img
-            :src="blog.imageUrl"
-            class="object-cover rounded-lg w-full h-64 md:h-96"
-            :alt="blog.title"
-          />
-        </div>
+            <!-- Blog Meta -->
+            <div class="flex flex-wrap items-center gap-4 mb-4">
+              <span
+                class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white/90 text-sm"
+              >
+                {{ formatDate(blog.createdAt) }}
+              </span>
+              <span
+                v-if="blog.type"
+                class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white/90 text-sm"
+              >
+                {{ blog.type }}
+              </span>
+            </div>
 
-        <!-- Blog Meta -->
-        <div class="flex flex-wrap items-center gap-4 mb-4">
-          <span class="blog-level">{{ formatDate(blog.createdAt) }}</span>
-          <span v-if="blog.type" class="blog-level">{{ blog.type }}</span>
-        </div>
+            <!-- Blog Title -->
+            <h1
+              class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight"
+            >
+              {{ blog.title }}
+            </h1>
 
-        <!-- Blog Title -->
-        <h1 class="text-3xl md:text-4xl font-bold text-dark mb-6">
-          {{ blog.title }}
-        </h1>
+            <!-- Author & Read Time -->
+            <div class="flex flex-wrap items-center gap-6">
+              <!-- Author -->
+              <div v-if="blog.author" class="flex items-center gap-3">
+                <div
+                  class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white font-semibold text-lg border-2 border-white/30"
+                >
+                  {{ blog.author.charAt(0).toUpperCase() }}
+                </div>
+                <div>
+                  <p class="text-sm text-white/70">Author</p>
+                  <p class="font-medium text-white">{{ blog.author }}</p>
+                </div>
+              </div>
 
-        <!-- Author -->
-        <div v-if="blog.author" class="flex items-center gap-3 mb-8">
-          <div
-            class="w-10 h-10 rounded-full bg-gradient-to-r from-[#7d37d8] to-[#dd6e20] flex items-center justify-center text-white font-semibold"
-          >
-            {{ blog.author.charAt(0).toUpperCase() }}
+              <!-- Read Time -->
+              <div
+                v-if="blog.minsToRead"
+                class="flex items-center gap-2 text-white/80"
+              >
+                <Icon name="uil:clock" class="text-white/80"></Icon>
+                <span>{{ blog.minsToRead }} min read</span>
+              </div>
+            </div>
           </div>
-          <div>
-            <p class="text-sm text-gray-500">Author</p>
-            <p class="font-medium text-[#000462]">{{ blog.author }}</p>
+        </div>
+      </div>
+
+      <!-- Content Section -->
+      <div class="pt-16 pb-10 px-5 lg:px-20 mb-20">
+        <div class="w-full mx-auto">
+          <!-- Content — no `prose` class to avoid Tailwind Typography conflicts -->
+          <div class="bg-[#FCFCFD] content py-8 px-6 md:px-10 rounded-lg">
+            <div v-html="blog.content"></div>
           </div>
-        </div>
 
-        <!-- Read Time -->
-        <div
-          v-if="blog.minsToRead"
-          class="flex items-center gap-2 text-gray-500 mb-8"
-        >
-          <Icon name="uil:clock" class="text-gray-500"></Icon>
-          <span>{{ blog.minsToRead }} min read</span>
-        </div>
-
-        <!-- Content — no `prose` class to avoid Tailwind Typography conflicts -->
-        <div class="bg-[#FCFCFD] content py-8 px-6 md:px-10 rounded-lg">
-          <div v-html="blog.content"></div>
-        </div>
-
-        <!-- Share Section -->
-        <div class="mt-10 pt-6 border-t border-gray-200">
-          <p class="font-medium text-gray-700 mb-4">Share this article</p>
-          <div class="flex gap-4">
-            <button
-              class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition-colors"
-            >
-              <Icon name="uil:facebook-f" class=""></Icon>
-            </button>
-            <button
-              class="w-10 h-10 rounded-full bg-sky-500 text-white flex items-center justify-center hover:bg-sky-600 transition-colors"
-            >
-              <Icon name="uil:twitter" class=""></Icon>
-            </button>
-            <button
-              class="w-10 h-10 rounded-full bg-linkedin text-white flex items-center justify-center hover:bg-linkedin transition-colors"
-            >
-              <Icon name="uil:linkedin" class=""></Icon>
-            </button>
+          <!-- Share Section -->
+          <div class="mt-10 pt-6 border-t border-gray-200">
+            <p class="font-medium text-gray-700 mb-4">Share this article</p>
+            <div class="flex gap-4">
+              <button
+                class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition-colors"
+              >
+                <Icon name="uil:facebook-f" class=""></Icon>
+              </button>
+              <button
+                class="w-10 h-10 rounded-full bg-sky-500 text-white flex items-center justify-center hover:bg-sky-600 transition-colors"
+              >
+                <Icon name="uil:twitter" class=""></Icon>
+              </button>
+              <button
+                class="w-10 h-10 rounded-full bg-linkedin text-white flex items-center justify-center hover:bg-linkedin transition-colors"
+              >
+                <Icon name="uil:linkedin" class=""></Icon>
+              </button>
+            </div>
           </div>
         </div>
       </div>

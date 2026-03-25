@@ -1,144 +1,212 @@
 <template>
   <div class="">
-    <!-- End Popup Modal -->
+    <!-- Hero Section -->
     <div
-      class="bg-[#FEF0E9] min-h-screen pt-[100px] pb-28 bg-cover bg-center"
+      class="relative min-h-screen pt-[100px] pb-20 bg-cover bg-center overflow-hidden"
       :style="{ backgroundImage: `url(/lines-hero.svg)` }"
       data-aos="fade-up"
     >
+      <!-- Gradient overlay for depth -->
       <div
-        class="text-dark w-full px-5 lg:px-20 md:gap-y-5 flex justify-between items-center"
+        class="absolute inset-0 bg-gradient-to-b from-[#FEF0E9]/50 to-transparent pointer-events-none"
+      ></div>
+
+      <div
+        class="text-dark w-full px-5 lg:px-20 md:gap-y-5 flex justify-between items-center relative z-10"
       >
         <div
           class="md:w-8/12 flex flex-col items-center justify-center mx-auto w-full"
         >
+          <!-- Elegant badge -->
           <div
-            class="rounded-full text-[15px] border-[0.5px] mb-4 border-[#F26B2173] px-[16px] py-[8px]"
+            class="group relative inline-flex items-center gap-2 text-[14px] font-medium mb-6 px-5 py-2.5 rounded-full bg-white/80 backdrop-blur-sm border border-[#F26B2133] shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
           >
-            ✨ Data & Insights. Better Decisions.📈
+            <span
+              class="w-2 h-2 rounded-full bg-secondary animate-pulse"
+            ></span>
+            <span class="text-[#3B3B3F]"
+              >Data & Insights. Better Decisions.</span
+            >
+            <span class="text-secondary">📈</span>
           </div>
+
+          <!-- Refined heading -->
           <h1
-            class="md:text-6xl text-[#000005] text-3xl text-center font-semibold mb-5 w-full"
+            class="md:text-5xl text-[#000005] text-3xl text-center font-bold mb-6 w-full leading-tight"
           >
-            Professional Research, and Data Collection Service Provider
+            Professional Research &
+            <span class="text-secondary">Data Solutions</span>
           </h1>
-          <p class="w-full md:w-10/12 mx-auto leading-6 text-center text-lg">
-            We provide organizations with research, and data-backed insights to
-            eliminate guesswork, reduce risk, and uncover opportunities.
+
+          <!-- Improved description -->
+          <p
+            class="w-full md:w-10/12 mx-auto leading-7 text-center text-lg text-[#5A5A5E]"
+          >
+            We help organizations transform raw data into actionable
+            insights—eliminating guesswork, reducing risk, and uncovering growth
+            opportunities.
           </p>
-          <div class="flex md:flex-row flex-col mt-8 mb-4 gap-4 justify-center">
+
+          <!-- Enhanced buttons -->
+          <div
+            class="flex md:flex-row flex-col mt-10 mb-4 gap-4 justify-center"
+          >
             <button
               @click="handleClick"
-              class="bg-secondary py-[14px] px-[16px] rounded-[8px] text-white"
+              class="group relative bg-secondary py-3.5 px-8 rounded-lg text-white font-medium overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-secondary/30"
             >
-              Contact Us
+              <span class="relative z-10">Contact Us</span>
+              <div
+                class="absolute inset-0 bg-[#E55A1A] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"
+              ></div>
             </button>
             <a
               href="mailto:sales@zacrac.com"
               target="_blank"
-              class="bg-[#000005] py-[14px] px-[16px] rounded-[8px] text-white"
+              class="group relative bg-[#000005] py-3.5 px-8 rounded-lg text-white font-medium overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-black/20"
             >
-              Explore Solutions
+              <span class="relative z-10">Explore Solutions</span>
+              <div
+                class="absolute inset-0 bg-[#1A1A1F] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"
+              ></div>
             </a>
           </div>
         </div>
       </div>
+
+      <!-- Feature cards with improved styling -->
       <div
-        class="md:w-8/12 my-12 w-full mx-auto grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4"
+        class="md:w-10/12 my-16 w-full mx-auto grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6 px-4"
       >
-        <div class="text-center">
+        <div
+          class="group text-center p-6 rounded-2xl bg-white/70 backdrop-blur-sm border border-white/50 shadow-sm hover:shadow-xl hover:shadow-secondary/10 transition-all duration-300 hover:-translate-y-1"
+        >
           <div
-            class="border-[1px] rounded-full inline-block border-[#DEDEDF] bg-white py-[8px] px-[32px]"
+            class="border border-[#DEDEDF] rounded-2xl inline-block bg-white p-4 mb-4 group-hover:border-secondary/30 transition-colors duration-300"
           >
-            <img src="/icons/icon1.svg" alt="" />
+            <img src="/icons/icon1.svg" alt="" class="w-8 h-8" />
           </div>
-          <p class="font-bold text-lg mb-2 text-[#3B3B3F]">
+          <p
+            class="font-bold text-base mb-2 text-[#3B3B3F] group-hover:text-secondary transition-colors duration-300"
+          >
             Data-Driven Decisions
           </p>
-          <p class="text-[15px] font-medium text-[#757578]">
-            Trusted by leading organizations to collect, and transform data into
-            strategic insights.
+          <p class="text-sm font-medium text-[#757578] leading-relaxed">
+            Trusted by leading organizations to transform data into strategic
+            insights.
           </p>
         </div>
-        <div class="text-center">
+        <div
+          class="group text-center p-6 rounded-2xl bg-white/70 backdrop-blur-sm border border-white/50 shadow-sm hover:shadow-xl hover:shadow-secondary/10 transition-all duration-300 hover:-translate-y-1"
+        >
           <div
-            class="border-[1px] rounded-full inline-block border-[#DEDEDF] bg-white py-[8px] px-[32px]"
+            class="border border-[#DEDEDF] rounded-2xl inline-block bg-white p-4 mb-4 group-hover:border-secondary/30 transition-colors duration-300"
           >
-            <img src="/icons/icon3.svg" alt="" />
+            <img src="/icons/icon3.svg" alt="" class="w-8 h-8" />
           </div>
-          <p class="font-bold text-lg mb-2 text-[#3B3B3F]">Proven Expertise</p>
-          <p class="text-[15px] font-medium text-[#757578]">
-            Over a decade of experience delivering professional research, data
-            collection, and data analytics services.
+          <p
+            class="font-bold text-base mb-2 text-[#3B3B3F] group-hover:text-secondary transition-colors duration-300"
+          >
+            Proven Expertise
+          </p>
+          <p class="text-sm font-medium text-[#757578] leading-relaxed">
+            Over a decade of experience delivering professional research &
+            analytics.
           </p>
         </div>
-        <div class="text-center">
+        <div
+          class="group text-center p-6 rounded-2xl bg-white/70 backdrop-blur-sm border border-white/50 shadow-sm hover:shadow-xl hover:shadow-secondary/10 transition-all duration-300 hover:-translate-y-1"
+        >
           <div
-            class="border-[1px] rounded-full inline-block border-[#DEDEDF] bg-white py-[8px] px-[32px]"
+            class="border border-[#DEDEDF] rounded-2xl inline-block bg-white p-4 mb-4 group-hover:border-secondary/30 transition-colors duration-300"
           >
-            <img src="/icons/icon8.svg" alt="" />
+            <img src="/icons/icon8.svg" alt="" class="w-8 h-8" />
           </div>
-          <p class="font-bold text-lg mb-2 text-[#3B3B3F]">
+          <p
+            class="font-bold text-base mb-2 text-[#3B3B3F] group-hover:text-secondary transition-colors duration-300"
+          >
             Innovative Solutions
           </p>
-          <p class="text-[15px] font-medium text-[#757578]">
-            Cutting-edge research, data collection, and data analytics services
-            tailored to your organization's needs.
+          <p class="text-sm font-medium text-[#757578] leading-relaxed">
+            Cutting-edge methodologies tailored to your organization's needs.
           </p>
         </div>
-        <div class="text-center">
+        <div
+          class="group text-center p-6 rounded-2xl bg-white/70 backdrop-blur-sm border border-white/50 shadow-sm hover:shadow-xl hover:shadow-secondary/10 transition-all duration-300 hover:-translate-y-1"
+        >
           <div
-            class="border-[1px] rounded-full inline-block border-[#DEDEDF] bg-white py-[8px] px-[32px]"
+            class="border border-[#DEDEDF] rounded-2xl inline-block bg-white p-4 mb-4 group-hover:border-secondary/30 transition-colors duration-300"
           >
-            <img src="/icons/icon2.svg" alt="" />
+            <img src="/icons/icon2.svg" alt="" class="w-8 h-8" />
           </div>
-          <p class="font-bold text-lg mb-2 text-[#3B3B3F]">
+          <p
+            class="font-bold text-base mb-2 text-[#3B3B3F] group-hover:text-secondary transition-colors duration-300"
+          >
             Measurable Results
           </p>
-          <p class="text-[15px] font-medium text-[#757578]">
-            Boost your growth and performance with our data-driven strategies.
+          <p class="text-sm font-medium text-[#757578] leading-relaxed">
+            Boost growth and performance with our data-driven strategies.
           </p>
         </div>
       </div>
     </div>
-    <div class="px-5 md:px-20 bg-primary w-full py-16" data-aos="fade-up">
+    <!-- Why Trust Us Section -->
+    <div
+      class="px-5 md:px-20 bg-primary w-full py-20 relative overflow-hidden"
+      data-aos="fade-up"
+    >
+      <!-- Subtle pattern overlay -->
       <div
-        class="md:w-8/12 flex flex-col items-center justify-center mx-auto w-full"
+        class="absolute inset-0 opacity-5"
+        style="
+          background-image: radial-gradient(
+            circle at 2px 2px,
+            white 1px,
+            transparent 0
+          );
+          background-size: 32px 32px;
+        "
+      ></div>
+
+      <div
+        class="md:w-8/12 flex flex-col items-center justify-center mx-auto w-full relative z-10"
       >
         <div
-          class="rounded-full text-[#3B3B3F] text-center bg-[#E6E6F0] text-[15px] border-[0.5px] mb-4 border-primary px-[16px] py-[8px]"
+          class="inline-flex items-center gap-2 text-[13px] font-semibold tracking-wide text-[#3B3B3F] bg-[#E6E6F0] rounded-full px-4 py-2 mb-6"
         >
-          ✨ WHY HUNDREDS OF THOUSANDS TRUST US
+          <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+          WHY HUNDREDS OF THOUSANDS TRUST US
         </div>
         <h2
-          class="text-white md:text-left text-center font-bold md:text-4xl text-3xl mb-8"
+          class="text-white md:text-left text-center font-bold md:text-4xl text-3xl mb-6"
         >
-          Your Reliable Partner for Data, <br />
+          Your Reliable Partner for <span class="text-secondary">Data</span>,
+          <br />
           Analytics, and Intelligence.
         </h2>
       </div>
       <div
-        class="md:w-10/12 mx-auto w-full rounded-[8px] overflow-hidden flex md:flex-row flex-col-reverse items-stretch"
+        class="md:w-10/12 mx-auto w-full rounded-2xl overflow-hidden flex md:flex-row flex-col-reverse items-stretch shadow-2xl"
       >
         <div class="md:w-6/12 bg-white px-8 py-12">
-          <div class="flex items-start gap-2 mb-4">
-            <span>✨</span>
-            <p class="text-lg text-[#757578] font-medium">
+          <div class="flex items-start gap-3 mb-5">
+            <span class="mt-1 text-secondary">✦</span>
+            <p class="text-base text-[#5A5A5E] leading-relaxed">
               ZACRAC is a team of experienced Market Researchers, Data Analysts,
               Data Scientists, and Consultants dedicated to helping businesses
               like yours thrive.
             </p>
           </div>
-          <div class="flex items-start gap-2 mb-4">
-            <span>✨</span>
-            <p class="text-lg text-[#757578] font-medium">
+          <div class="flex items-start gap-3 mb-5">
+            <span class="mt-1 text-secondary">✦</span>
+            <p class="text-base text-[#5A5A5E] leading-relaxed">
               We combine cutting-edge methodologies with deep industry expertise
               to deliver unparalleled market insights.
             </p>
           </div>
-          <div class="flex items-start gap-2 mb-4">
-            <span>✨</span>
-            <p class="text-lg text-[#757578] font-medium">
+          <div class="flex items-start gap-3">
+            <span class="mt-1 text-secondary">✦</span>
+            <p class="text-base text-[#5A5A5E] leading-relaxed">
               Our focus is on providing you with the accurate, reliable, and
               actionable data you need to make informed decisions, minimize
               risk, and achieve your business objectives.
@@ -154,26 +222,32 @@
         </div>
       </div>
     </div>
+    <!-- Suite of Solutions Section -->
     <div
-      class="px-5 md:px-20 bg-secondary w-full py-16 bg-cover bg-center"
+      class="px-5 md:px-20 bg-secondary w-full py-20 bg-cover bg-center relative"
       :style="{ backgroundImage: `url(/solution-bg.svg)` }"
       data-aos="fade-up"
     >
+      <!-- Gradient overlay -->
+      <div class="absolute inset-0 bg-secondary/90 pointer-events-none"></div>
+
       <div
-        class="md:w-8/12 flex flex-col items-center md:justify-center justify-start mx-auto w-full"
+        class="md:w-8/12 flex flex-col items-center md:justify-center justify-start mx-auto w-full relative z-10"
       >
         <div
-          class="rounded-full text-[15px] text-[#3B3B3F] bg-[#FFF0E6] border-[0.5px] mb-4 border-[#F26B2173] px-[16px] py-[8px]"
+          class="inline-flex items-center gap-2 text-[13px] font-semibold tracking-wide text-[#3B3B3F] bg-[#FFF0E6] rounded-full px-4 py-2 mb-6"
         >
+          <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
           SUITE OF SOLUTIONS
         </div>
         <h1
-          class="md:text-4xl text-white text-2xl md:text-center text-left font-semibold mb-5 w-full"
+          class="md:text-4xl text-white text-2xl md:text-center text-left font-bold mb-5 w-full"
         >
-          Comprehensive Data Services to Drive Your Organization Forward
+          Comprehensive Data Services to
+          <span class="text-[#FFB88C]">Drive Your Organization Forward</span>
         </h1>
         <p
-          class="w-full text-[#EBEBEB] leading-6 md:text-center text-left text-lg"
+          class="w-full text-white/80 leading-relaxed md:text-center text-left text-lg"
         >
           At Zacrac, we offer a range of tailored data services designed to
           unlock valuable insights and propel your organization towards success.
@@ -182,18 +256,24 @@
         </p>
       </div>
       <div
-        class="md:w-10/12 mx-auto grid md:grid-cols-2 grid-cols-1 gap-8 mt-12"
+        class="md:w-10/12 mx-auto grid md:grid-cols-2 grid-cols-1 gap-8 mt-12 relative z-10"
       >
         <div
-          class="rounded-[16px] relative bg-white p-[24px]"
+          class="group rounded-2xl relative bg-white p-8 shadow-lg hover:shadow-2xl hover:shadow-black/10 transition-all duration-500 hover:-translate-y-2"
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          <img src="/icons/icon6.png" class="mb-8" alt="" />
-          <h4 class="text-2xl text-bold text-[#3B3B3F] mb-4">
+          <div
+            class="w-14 h-14 rounded-2xl bg-[#FFF5F0] flex items-center justify-center mb-6 group-hover:bg-secondary/10 transition-colors duration-300"
+          >
+            <img src="/icons/icon6.png" class="w-8 h-8" alt="" />
+          </div>
+          <h4
+            class="text-2xl font-bold text-[#3B3B3F] mb-3 group-hover:text-secondary transition-colors duration-300"
+          >
             Market Research
           </h4>
-          <p class="text-lg font-medium text-[#757578] mb-16">
+          <p class="text-base font-medium text-[#757578] leading-relaxed mb-8">
             Uncover hidden opportunities and understand your customers deeply
             via primary research through Surveys, Interviews, Focus Groups etc.
             We provide actionable insights into market dynamics, and customer
@@ -201,42 +281,80 @@
           </p>
           <nuxt-link
             to="/market-research"
-            class="py-[14px] px-[16px] border-[1px] border-[#757578] rounded-[8px] text-[15px] font-medium text-[#1C1C21] absolute left-[24px] bottom-[24px]"
+            class="inline-flex items-center gap-2 py-3 px-5 border border-[#DEDEDF] rounded-lg text-[14px] font-semibold text-[#1C1C21] group-hover:border-secondary group-hover:text-secondary transition-all duration-300"
           >
             Learn more
+            <svg
+              class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              ></path>
+            </svg>
           </nuxt-link>
         </div>
         <div
-          class="rounded-[16px] relative bg-white p-[24px]"
+          class="group rounded-2xl relative bg-white p-8 shadow-lg hover:shadow-2xl hover:shadow-black/10 transition-all duration-500 hover:-translate-y-2"
           data-aos="fade-up"
           data-aos-delay="200"
         >
-          <img src="/icons/icon4.png" class="mb-8" alt="" />
-          <h4 class="text-2xl text-bold text-[#3B3B3F] mb-4">
+          <div
+            class="w-14 h-14 rounded-2xl bg-[#FFF5F0] flex items-center justify-center mb-6 group-hover:bg-secondary/10 transition-colors duration-300"
+          >
+            <img src="/icons/icon4.png" class="w-8 h-8" alt="" />
+          </div>
+          <h4
+            class="text-2xl font-bold text-[#3B3B3F] mb-3 group-hover:text-secondary transition-colors duration-300"
+          >
             Market Intelligence
           </h4>
-          <p class="text-lg font-medium text-[#757578] mb-16">
+          <p class="text-base font-medium text-[#757578] leading-relaxed mb-8">
             Stay ahead of the curve. We deliver ongoing market analysis,
             competitor insights, and industry trends, empowering you to
             anticipate change and seize new opportunities.
           </p>
           <nuxt-link
             to="/market-intelligence"
-            class="py-[14px] px-[16px] border-[1px] border-[#757578] rounded-[8px] text-[15px] font-medium text-[#1C1C21] absolute left-[24px] bottom-[24px]"
+            class="inline-flex items-center gap-2 py-3 px-5 border border-[#DEDEDF] rounded-lg text-[14px] font-semibold text-[#1C1C21] group-hover:border-secondary group-hover:text-secondary transition-all duration-300"
           >
             Learn more
+            <svg
+              class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              ></path>
+            </svg>
           </nuxt-link>
         </div>
         <div
-          class="rounded-[16px] relative bg-white p-[24px]"
+          class="group rounded-2xl relative bg-white p-8 shadow-lg hover:shadow-2xl hover:shadow-black/10 transition-all duration-500 hover:-translate-y-2"
           data-aos="fade-up"
           data-aos-delay="300"
         >
-          <img src="/icons/icon5.png" class="mb-8" alt="" />
-          <h4 class="text-2xl text-bold text-[#3B3B3F] mb-4">
+          <div
+            class="w-14 h-14 rounded-2xl bg-[#FFF5F0] flex items-center justify-center mb-6 group-hover:bg-secondary/10 transition-colors duration-300"
+          >
+            <img src="/icons/icon5.png" class="w-8 h-8" alt="" />
+          </div>
+          <h4
+            class="text-2xl font-bold text-[#3B3B3F] mb-3 group-hover:text-secondary transition-colors duration-300"
+          >
             Customer Reviews & Intelligence
           </h4>
-          <p class="text-lg font-medium text-[#757578] mb-16">
+          <p class="text-base font-medium text-[#757578] leading-relaxed mb-8">
             Understand the voice of your customer. Using our state-of-the-heart
             customer reviews and intelligence platform, we collect and analyze
             reviews and feedback to identify areas for improvement, enhance
@@ -244,80 +362,132 @@
           </p>
           <nuxt-link
             to="/customer-reviews"
-            class="py-[14px] px-[16px] border-[1px] border-[#757578] rounded-[8px] text-[15px] font-medium text-[#1C1C21] absolute left-[24px] bottom-[24px]"
+            class="inline-flex items-center gap-2 py-3 px-5 border border-[#DEDEDF] rounded-lg text-[14px] font-semibold text-[#1C1C21] group-hover:border-secondary group-hover:text-secondary transition-all duration-300"
           >
             Learn more
+            <svg
+              class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              ></path>
+            </svg>
           </nuxt-link>
         </div>
         <div
-          class="rounded-[16px] relative bg-white p-[24px]"
+          class="group rounded-2xl relative bg-white p-8 shadow-lg hover:shadow-2xl hover:shadow-black/10 transition-all duration-500 hover:-translate-y-2"
           data-aos="fade-up"
           data-aos-delay="400"
         >
-          <img src="/icons/icon7.png" class="mb-8" alt="" />
-          <h4 class="text-2xl text-bold text-[#3B3B3F] mb-4">
+          <div
+            class="w-14 h-14 rounded-2xl bg-[#FFF5F0] flex items-center justify-center mb-6 group-hover:bg-secondary/10 transition-colors duration-300"
+          >
+            <img src="/icons/icon7.png" class="w-8 h-8" alt="" />
+          </div>
+          <h4
+            class="text-2xl font-bold text-[#3B3B3F] mb-3 group-hover:text-secondary transition-colors duration-300"
+          >
             Analytics-as-a-Service
           </h4>
-          <p class="text-lg font-medium text-[#757578] mb-16">
+          <p class="text-base font-medium text-[#757578] leading-relaxed mb-8">
             Transform your data into strategic advantage. Our expert analysts
             provide on-demand insights, predictive modeling, data visualization
             and reporting to improve your business performance.
           </p>
           <nuxt-link
             to="/analytics-as-a-service"
-            class="py-[14px] px-[16px] border-[1px] border-[#757578] rounded-[8px] text-[15px] font-medium text-[#1C1C21] absolute left-[24px] bottom-[24px]"
+            class="inline-flex items-center gap-2 py-3 px-5 border border-[#DEDEDF] rounded-lg text-[14px] font-semibold text-[#1C1C21] group-hover:border-secondary group-hover:text-secondary transition-all duration-300"
           >
             Learn more
+            <svg
+              class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              ></path>
+            </svg>
           </nuxt-link>
         </div>
       </div>
+      <!-- Data Strategy CTA -->
       <div
-        class="md:w-10/12 mx-auto mt-8 rounded-[16px] flex md:flex-row flex-col justify-between item-center bg-white md:p-20 p-[24px]"
+        class="md:w-10/12 mx-auto mt-10 rounded-2xl flex md:flex-row flex-col justify-between items-center bg-white md:p-10 p-8 shadow-xl"
       >
-        <div class="md:w-4/12 w-full">
-          <img src="/icons/icon5.png" class="mb-6" alt="" />
-          <h4 class="text-2xl text-bold text-[#3B3B3F]">Data Strategy</h4>
+        <div class="md:w-4/12 w-full mb-6 md:mb-0">
+          <div
+            class="w-14 h-14 rounded-2xl bg-[#FFF5F0] flex items-center justify-center mb-4"
+          >
+            <img src="/icons/icon5.png" class="w-8 h-8" alt="" />
+          </div>
+          <h4 class="text-2xl font-bold text-[#3B3B3F]">Data Strategy</h4>
         </div>
         <div
           class="md:w-8/12 w-full flex md:flex-row flex-col gap-6 md:items-center items-start"
         >
-          <p class="text-lg font-medium text-[#757578]">
+          <p class="text-base font-medium text-[#757578] leading-relaxed">
             Unlock the full potential of your data. We develop a customized data
             roadmap aligned with your business goals, enabling data-driven
             decision-making and sustainable growth.
           </p>
           <nuxt-link
             to="/data-strategy"
-            class="min-w-[125px] py-[14px] px-[16px] border-[1px] border-[#757578] rounded-[8px] text-[15px] font-medium text-[#1C1C21]"
+            class="whitespace-nowrap inline-flex items-center gap-2 py-3 px-5 border border-[#DEDEDF] rounded-lg text-[14px] font-semibold text-[#1C1C21] hover:border-secondary hover:text-secondary transition-all duration-300"
           >
             Learn more
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              ></path>
+            </svg>
           </nuxt-link>
         </div>
       </div>
     </div>
+    <!-- Case Studies Section -->
     <div class="px-5 lg:px-20 my-10 md:my-20 w-full" data-aos="fade-up">
       <div
-        class="md:w-8/12 flex flex-col items-center justify-center mx-auto w-full"
+        class="md:w-8/12 flex flex-col items-center justify-center mx-auto w-full mb-12"
       >
         <div
-          class="rounded-full text-[15px] text-[#3B3B3F] bg-[#E6E6F0] border-[0.5px] mb-4 border-[#000066] px-[16px] py-[8px]"
+          class="inline-flex items-center gap-2 text-[13px] font-semibold tracking-wide text-[#3B3B3F] bg-[#E6E6F0] rounded-full px-4 py-2 mb-4"
         >
-          ✨ DATA IN ACTION
+          <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+          DATA IN ACTION
         </div>
         <h1
-          class="md:text-4xl text-2xl md:text-center text-left font-semibold mb-5 w-full"
+          class="md:text-4xl text-2xl md:text-center text-left font-bold mb-4 w-full"
         >
           Case Studies and Success Stories
         </h1>
         <p
-          class="w-full text-[#4A4A4E] leading-6 md:text-center text-left text-lg"
+          class="w-full text-[#5A5A5E] leading-relaxed md:text-center text-left text-lg"
         >
           Explore real-world examples of how our expertise has driven growth and
           innovation.
         </p>
       </div>
 
-      <div class="md:w-10/12 w-full mx-auto mt-12">
+      <div class="md:w-10/12 w-full mx-auto">
         <case-slide />
       </div>
     </div>

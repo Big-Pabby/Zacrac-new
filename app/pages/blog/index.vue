@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col w-full flex-no-wrap pt-20 pb-16 bg-gray-50">
+  <div class="flex flex-col w-full flex-no-wrap pb-16 bg-gray-50">
     <!-- Hero Section -->
     <div
       class="px-5 lg:px-20 py-12 bg-gradient-to-r from-[#000462] to-[#1a1a8a]"
