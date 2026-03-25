@@ -63,9 +63,9 @@
           <span>{{ blog.minsToRead }} min read</span>
         </div>
 
-        <!-- Content -->
+        <!-- Content — no `prose` class to avoid Tailwind Typography conflicts -->
         <div class="bg-[#FCFCFD] content py-8 px-6 md:px-10 rounded-lg">
-          <div v-html="blog.content" class="prose max-w-none"></div>
+          <div v-html="blog.content"></div>
         </div>
 
         <!-- Share Section -->
@@ -143,9 +143,7 @@ const formatDate = (time: string) => {
 
 const getMetaDescription = () => {
   if (!blog.value) return "";
-  // Strip HTML tags and get plain text
   const plainText = blog.value.content?.replace(/<[^>]*>/g, "") || "";
-  // Truncate to ~160 characters for meta description
   return plainText.length > 160
     ? plainText.substring(0, 157) + "..."
     : plainText;
@@ -160,18 +158,16 @@ const getCurrentUrl = () => {
   return `https://zacrac.com/blog/${category}/${slug}`;
 };
 
-// Computed slug from route params
 const slug = computed(() => route.params.slug as string);
 
-// Use useFetch instead of axios
-const { data: response, pending, error } = await useFetch(
-  `https://parrotapi.parrot.cx/blog/slug/${slug.value}`,
-  {
-    watch: [slug],
-  }
-);
+const {
+  data: response,
+  pending,
+  error,
+} = await useFetch(`https://parrotapi.parrot.cx/blog/slug/${slug.value}`, {
+  watch: [slug],
+});
 
-// Handle response data
 watch(
   response,
   (newResponse: any) => {
@@ -185,10 +181,9 @@ watch(
       fetchMessage.value = "Failed to load blog";
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
-// Handle errors
 watch(error, (err: any) => {
   if (err) {
     messageType.value = "fail";
@@ -197,10 +192,8 @@ watch(error, (err: any) => {
   }
 });
 
-// Computed loading state from useFetch
 const loading = computed(() => pending.value);
 
-// Watch for blog changes and update meta tags
 watch(
   blog,
   () => {
@@ -216,7 +209,6 @@ watch(
 const updateMetaTags = () => {
   if (!blog.value) return;
 
-  // Update document meta tags for social sharing
   const title = blog.value.title
     ? `${blog.value.title} | Zacrac`
     : "Blog | Zacrac";
@@ -224,26 +216,22 @@ const updateMetaTags = () => {
   const image = blog.value.imageUrl || "";
   const url = getCurrentUrl();
 
-  // Update Open Graph tags
   updateMetaTag("og:title", title);
   updateMetaTag("og:description", description);
   updateMetaTag("og:image", image);
   updateMetaTag("og:url", url);
   updateMetaTag("og:type", "article");
 
-  // Update Twitter Card tags
   updateMetaTag("twitter:title", title);
   updateMetaTag("twitter:description", description);
   updateMetaTag("twitter:image", image);
   updateMetaTag("twitter:card", "summary_large_image");
 
-  // Update canonical URL
   const canonicalLink = document.querySelector('link[rel="canonical"]');
   if (canonicalLink) {
     canonicalLink.setAttribute("href", url);
   }
 
-  // Update document title
   document.title = title;
 };
 
@@ -266,10 +254,6 @@ const updateMetaTag = (property: string, content: string) => {
   }
 };
 
-// useFetch automatically fetches on mount and when slug changes
-// No need for onMounted call
-
-// SEO Meta
 useHead(() => ({
   title: blog.value?.title ? `${blog.value.title} | Zacrac` : "Blog | Zacrac",
   meta: [
@@ -353,7 +337,6 @@ useHead(() => ({
 </script>
 
 <style scoped>
-/* @import "@/assets/scss/_mixin.scss"; */
 .blog-level {
   padding: 5px 10px;
   background: #eeefff;
@@ -366,15 +349,12 @@ useHead(() => ({
   height: 2px;
   background: linear-gradient(to right, #7d37d8, #dd6e20);
 }
+
 .other-blogs {
   max-height: 800px;
   overflow-y: scroll;
-
-  /* @include sm {
-    overflow-x: scroll;
-    overflow-y: hidden;
-  } */
 }
+
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
@@ -390,14 +370,72 @@ useHead(() => ({
   -webkit-box-shadow: inset 0 0 6px #7d37d8;
 }
 
-.content :deep(a) {
-  color: #68cef8;
-  text-decoration: underline;
+/* ─── Content styles — synced 1:1 with TipTap ProseMirror editor ─── */
+
+.content :deep(*) {
+  font-family:
+    "Bricolage Grotesque",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  line-height: 1.7;
 }
 
+/* Spacing: mirrors .ProseMirror > * + * { margin-top: 0.75em } */
+.content :deep(> * + *) {
+  margin-top: 0.75em;
+}
+
+/* Paragraphs */
+.content :deep(p) {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* Headings — synced to editor sizes */
+.content :deep(h1),
+.content :deep(h2),
+.content :deep(h3),
+.content :deep(h4),
+.content :deep(h5),
+.content :deep(h6) {
+  line-height: 1.3;
+  color: #1a1a2e;
+  font-weight: 700;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+.content :deep(h1) {
+  font-size: 36px !important;
+}
+.content :deep(h2) {
+  font-size: 28px !important;
+}
+.content :deep(h3) {
+  font-size: 22px !important;
+}
+.content :deep(h4) {
+  font-size: 18px !important;
+}
+.content :deep(h5) {
+  font-size: 16px !important;
+}
+.content :deep(h6) {
+  font-size: 14px !important;
+}
+
+/* Links */
+.content :deep(a) {
+  color: #7d37d8 !important;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Lists — synced to editor (decimal, not upper-roman) */
 .content :deep(ul),
 .content :deep(ol) {
-  padding: 0 1rem;
+  padding: 0 1.5rem;
 }
 
 .content :deep(ul) {
@@ -405,74 +443,83 @@ useHead(() => ({
 }
 
 .content :deep(ol) {
-  list-style-type: upper-roman;
+  list-style-type: decimal;
 }
 
-.content :deep(h1),
-.content :deep(h2),
-.content :deep(h3),
-.content :deep(h4),
-.content :deep(h5),
-.content :deep(h6) {
-  line-height: 1.1;
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
+.content :deep(li) {
+  margin: 0.5em 0;
 }
 
-.content :deep(h1) {
-  font-size: 48px;
-}
-
-.content :deep(h2) {
-  font-size: 32px;
-}
-
-.content :deep(h3) {
-  font-size: 24px;
-}
-
-.content :deep(h4) {
-  font-size: 16px;
-}
-
+/* Inline code */
 .content :deep(code) {
-  background-color: rgba(#616161, 0.1);
-  color: #616161;
+  background-color: #f3f4f6;
+  color: #7d37d8;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: "Matter", monospace;
+  font-size: 0.9em;
 }
 
+/* Code blocks */
 .content :deep(pre) {
-  background: #0d0d0d;
+  background: #1a1a2e;
   color: #fff;
-  font-family: "JetBrainsMono", monospace;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
+  font-family: "Matter", monospace;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
 }
 
 .content :deep(pre code) {
   color: inherit;
   padding: 0;
   background: none;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 }
 
+/* Images */
 .content :deep(img) {
   max-width: 100%;
   height: auto;
+  border-radius: 8px;
+  margin: 1rem 0;
+  display: block;
 }
 
+/* Blockquote */
 .content :deep(blockquote) {
-  padding-left: 1rem;
-  border-left: 2px solid rgba(#0d0d0d, 0.1);
+  padding: 0.5rem 1rem;
+  border-left: 4px solid #7d37d8;
+  color: #6b7280;
+  font-style: italic;
+  margin: 1rem 0;
+  background: #f9fafb;
+  border-radius: 0 8px 8px 0;
 }
 
+/* Horizontal rule */
 .content :deep(hr) {
   border: none;
-  border-top: 2px solid rgba(#0d0d0d, 0.1);
+  border-top: 2px solid #e5e7eb;
   margin: 2rem 0;
 }
 
-.content :deep(p) {
-  margin: 10px 0px;
-  font-size: 17px;
+/* Tables */
+.content :deep(table) {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.content :deep(th),
+.content :deep(td) {
+  border: 1px solid #e5e7eb;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.content :deep(th) {
+  background: #f9fafb;
+  font-weight: 600;
 }
 </style>
