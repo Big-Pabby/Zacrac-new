@@ -61,7 +61,7 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css", "~/assets/css/header.css"],
   ssr: true,
   plugins: [],
-  
+
   site: {
     url: "https://www.zacrac.com",
   },
@@ -90,8 +90,13 @@ export default defineNuxtConfig({
     preset: "node-server",
 
     prerender: {
-      routes: ["/"], // homepage
-      crawlLinks: true, // auto-discover links
+      routes: ["/"],
+      crawlLinks: false, // disable crawl to prevent dynamic route prerendering
     },
+  },
+
+  routeRules: {
+    // SSR for dynamic routes - don't prerender
+    "/blog/**": { swr: 3600 }, // Vercel ISR: revalidate every hour
   },
 });
